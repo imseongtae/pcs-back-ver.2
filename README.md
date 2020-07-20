@@ -22,9 +22,9 @@ syncDb().then(() => {
 const db = require('../models');
 
 module.exports = () => {
-	const options = {
-		force: process.env.NODE_ENV === 'test' ? true : false,
+  const options = {
+    force: process.env.NODE_ENV === 'test' ? true : false,
 	};
-	return db.sequelize.sync(options);
+  return db.sequelize.sync(options);
 };
 ```

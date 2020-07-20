@@ -11,9 +11,9 @@ const syncDb = require('./sync-db');
 const app = require('../app');
 
 syncDb().then(() => {
-	app.listen(3000, () => {
+  app.listen(3000, () => {
     console.log('pcs back-end 작동 중');
-	});
+  });
 });
 ```
 
@@ -24,7 +24,7 @@ const db = require('../models');
 module.exports = () => {
   const options = {
     force: process.env.NODE_ENV === 'test' ? true : false,
-	};
+  };
   return db.sequelize.sync(options);
 };
 ```

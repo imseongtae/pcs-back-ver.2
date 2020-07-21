@@ -3,14 +3,17 @@ const morgan = require('morgan');
 
 const app = express();
 
+// router module
+const api = require('./api');
+const userRouter = require('./api/user');
+
 // middleware
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-	res.status(200).send('hello world');
-	res.end();
-});
+// routes setting
+app.use('/', api());
+app.use('/users', userRouter);
 
 module.exports = app;

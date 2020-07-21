@@ -5,7 +5,9 @@ Performance Community Site Back-end 코드 저장소입니다.
 
 ## table of contents
 1. app 모듈 분리
-1. 
+1. sequelize 설정
+1. timezone 설정
+
 
 ## app 모듈 분리
 - app 실행 구문을 모듈로 분리
@@ -14,10 +16,10 @@ Performance Community Site Back-end 코드 저장소입니다.
 ```js
 const hostname = confg.development.host;
 syncDb().then(() => {
-	console.log('Database 작동 중');
-	app.server.listen(process.env.PORT || confg.port, hostname, () => {
-		console.log(`Server running at http://${hostname}:${confg.port}/`);
-	});
+  console.log('Database 작동 중');
+  app.server.listen(process.env.PORT || confg.port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${confg.port}/`);
+  });
 });
 ```
 
@@ -54,6 +56,7 @@ var seqConfig = {
     dateStrings: true, 
     typeCast: true 
   } ,
-  define: { timestamps: true } }
+  define: { timestamps: true } 
+}
 ```
 

@@ -59,4 +59,25 @@ var seqConfig = {
   define: { timestamps: true } 
 }
 ```
+### config/config.json
 
+```json
+{
+  "port": 3000,
+  "development": {
+    "username": "root",
+    "password": "12345",
+    "database": "pcs",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false,
+    "timezone": "+09:00",
+    "dialectOptions": { 
+      "charset": "utf8mb4", 
+      "dateStrings": true, 
+      "typeCast": true 
+    }
+  },
+}
+
+```

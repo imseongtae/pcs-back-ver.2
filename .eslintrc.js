@@ -27,5 +27,5 @@ module.exports = {
 		],
 	},
 
-	ignorePatterns: ['temp.js', 'node_modules/'],
+	ignorePatterns: ['temp.js', 'node_modules/', '*.spec.js'],
 };

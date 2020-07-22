@@ -10,4 +10,7 @@ router.get('/:id', ctrl.read);
 // create user
 router.post('/', ctrl.create);
 
+// delete user
+router.delete('/:id', ctrl.destroy);
+
 module.exports = router;

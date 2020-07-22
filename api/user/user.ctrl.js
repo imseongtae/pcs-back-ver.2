@@ -67,18 +67,22 @@ const create = async (req, res) => {
 	}
 };
 
-// const destroy = async (req, res) => {
-// 	try {
-// 		const id = parseInt(req.params.id, 10);
-// 		if (Number.isNaN(id))
-// 			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// };
+const destroy = async (req, res) => {
+	try {
+		const id = parseInt(req.params.id, 10);
+		if (Number.isNaN(id))
+			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
+
+		await User.destroy({ where: { id } });
+		res.status(204).json({ msg: true });
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 module.exports = {
 	index,
 	read,
 	create,
+	destroy,
 };

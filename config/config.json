@@ -12,7 +12,8 @@
       "charset": "utf8mb4", 
       "dateStrings": true, 
       "typeCast": true 
-    }
+    },
+    "logging": false
   },
   "test": {
     "username": "root",
@@ -26,7 +27,8 @@
       "charset": "utf8mb4", 
       "dateStrings": true, 
       "typeCast": true 
-    }
+    },
+    "logging": false    
   },
   "production": {
     "username": "root",

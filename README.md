@@ -4,10 +4,28 @@ Performance Community Site Back-end 코드 저장소입니다.
 ## Init Project
 
 ## table of contents
+1. 테스트 환경 설정
 1. app 모듈 분리
 1. sequelize 설정
-1. timezone 설정
+1. sequelize options 설정
 
+## 테스트 환경 설정
+- 환경 변수로 test 값을 전달하면, process 객체에 값이 할당된다.
+- morgan 부분에 테스트가 아닐 경우에만 서버 로그를 찍도록 설정
+
+```json
+{
+  "scripts": {
+    "test": "NOED_ENV=test mocha api/user/user.spec.js -w"
+  }
+}
+```
+
+```js
+if (process.env.NOED_ENV !== 'test') {
+  app.use(morgan('dev'));
+}
+```
 
 ## app 모듈 분리
 - app 실행 구문을 모듈로 분리
@@ -76,7 +94,8 @@ var seqConfig = {
       "charset": "utf8mb4", 
       "dateStrings": true, 
       "typeCast": true 
-    }
+    },
+    "logging": false
   },
 }
 

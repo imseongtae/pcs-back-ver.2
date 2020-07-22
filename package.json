@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon bin/www.js"
+    "dev": "nodemon bin/www.js",
+    "test": "NOED_ENV=test mocha api/user/user.spec.js -w"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +22,10 @@
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }

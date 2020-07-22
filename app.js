@@ -8,7 +8,9 @@ const api = require('./api');
 const userRouter = require('./api/user');
 
 // middleware
-app.use(morgan('dev'));
+if (process.env.NOED_ENV !== 'test') {
+	app.use(morgan('dev'));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

@@ -171,10 +171,50 @@ describe('POST /users', () => {
   })
 })
 
-// describe('DELETE /users/:id', () => {
-// })
-
 // describe('POST /users', () => {
 //   describe('성공시')
 //   describe('실패시')
 // })
+
+describe('DELETE /users/:id', () => {
+  before(() => models.sequelize.sync({ force: true }));
+  const users = [
+    {
+      email: 'haemil@gmail.com',
+      password: '1234',
+      nickname: 'ham',
+    },
+    {
+      email: 'sonaldo@gmail.com',
+      password: '1234',
+      nickname: 'son',
+    },
+    {
+      email: 'messi@gmail.com',
+      password: '1234',
+      nickname: 'messi',
+    },
+    {
+      email: "hamburger@naver.com",
+      password: "1234",
+      nickname: "hamburger"
+    }
+  ];
+  before(() => models.User.bulkCreate(users))
+  describe('성공시', () => {
+    it('사용자를 삭제할 경우 상태코드 204를 응답한다.', done => {
+      request(app)
+        .delete('/users/4')
+        .expect(204)
+        .end(done)        
+    })
+  })
+  describe('실패시', () => {
+    it('매개변수 id가 숫자가 아닐 경우 400으로 응답한다.', done => {
+      request(app)
+        .delete('/users/four')
+        .expect(400)
+        .end(done)
+    })
+  })
+})

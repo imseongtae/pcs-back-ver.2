@@ -3,6 +3,7 @@ const { version } = require('../package.json');
 
 const UserAPI = require('./user');
 const MemoAPI = require('./memo');
+const FacilityAPI = require('./facility');
 
 module.exports = () => {
 	const API = Router();
@@ -10,6 +11,7 @@ module.exports = () => {
 	// routing setting
 	API.use('/users', UserAPI);
 	API.use('/memos', MemoAPI);
+	API.use('/facilities', FacilityAPI);
 
 	API.get('/', (req, res) => {
 		res.status(200).send({ result: 'hello world' });

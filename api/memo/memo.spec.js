@@ -173,6 +173,82 @@ describe('POST /memos', () => {
   })
 })
 
+// update memo
+describe('PUT /users', () => {
+  const memos = [
+    {
+      "title": "첫 번째 메모입니다.",
+      "content": "hello this memo is first memo"
+    },
+    {
+      "title": "두 번째 메모입니다.",
+      "content": "hello this memo is second memo"
+    },
+    {
+      "title": "세 번째 메모입니다.",
+      "content": "hello this memo is third memo"
+    },
+  ]
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.Memo.bulkCreate(memos))
+
+  describe('성공시', () => {
+    const updatedMemo = {
+      "title": "네 번째 메모입니다.",
+      "content": "hello this memo is fourth memo"
+    }
+    let body; // it test case에서 사용할 변수
+    before(done => {
+      request(app)
+        .put('/memos/3')
+        .send(updatedMemo)
+        .expect(200)
+        .end((err, res) => { 
+          body = res.body;
+          // res.body.data.should.have.property('title', updatedMemo.title)
+          done()
+        })
+    })
+    it('변경된 title 응답', done => {
+      body.data.should.have.property('title', updatedMemo.title)
+      done();
+    });
+    it('변경된 content 응답', done => {
+      body.data.should.have.property('content', updatedMemo.content)
+      done();
+    });
+  })
+  describe('실패시', () => {
+// - 없는 메모일 경우 404 응답
+    it('정수가 아닌 id일 경우 400 응답', done => {
+      request(app).put('/memos/two').expect(400).end(done);
+    });
+    it('입력된 값 중 title 없을 경우 400 응답', done => {
+      const updatedMemo = {
+        "title": "",
+        "content": "hello this memo is fourth memo"
+      }
+      request(app).put('/memos/3').send(updatedMemo).expect(400).end(done);
+    });
+    it('입력된 값 중 content 없을 경우 400 응답', done => {
+      const updatedMemo = {
+        "title": "네 번째 메모입니다.",
+        "content": ""
+      }
+      request(app).put('/memos/3').send(updatedMemo).expect(400).end(done)
+    });
+    it('존재하지 않는 메모의 id값을 요청한 경우 404 응답', done => {
+      const updatedMemo = {
+        "title": "네 번째 메모입니다.",
+        "content": "hello this memo is fourth memo"
+      }
+      request(app).put('/memos/982').send(updatedMemo).expect(404).end(done)
+    });
+
+  })
+})
+
+
 
 // delete memo
 describe('DELETE /memos/:id', () => {

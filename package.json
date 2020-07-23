@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon bin/www.js",
-    "test": "NOED_ENV=test mocha api/user/user.spec.js -w"
+    "test:user": "NOED_ENV=test mocha api/user/user.spec.js -w",
+    "test:memo": "NOED_ENV=test mocha api/memo/memo.spec.js -w",
+    "test": "NOED_ENV=test mocha $(find ./api/ -name '*.spec.js') -w"    
   },
   "keywords": [],
   "author": "",

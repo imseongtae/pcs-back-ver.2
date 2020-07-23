@@ -2,8 +2,7 @@ const request = require('supertest');
 const should = require('should');
 const app = require('../../app');
 const models = require('../../models');
-
-const assert = require('assert')
+// const assert = require('assert')
 
 // http://jeonghwan-kim.github.io/dev/2020/05/25/supertest.html
 // function hasData(status, callback) { // 1번
@@ -171,10 +170,85 @@ describe('POST /users', () => {
   })
 })
 
-// describe('POST /users', () => {
-//   describe('성공시')
-//   describe('실패시')
-// })
+describe('PUT /users', () => {
+  const users = [
+    {
+      email: 'haemil@gmail.com',
+      password: '1234',
+      nickname: 'ham',
+    },
+    {
+      email: 'sonaldo@gmail.com',
+      password: '1234',
+      nickname: 'son',
+    },
+    {
+      email: 'messi@gmail.com',
+      password: '1234',
+      nickname: 'messi',
+    },
+    {
+      email: "hamburger@naver.com",
+      password: "1234",
+      nickname: "hamburger"
+    }
+  ];
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.User.bulkCreate(users))
+
+  describe('성공시', () => {
+    it('변경된 nickname을 응답한다.', done => {
+      const updatedUser = {
+        email: "chicken@naver.com",
+        password: "1234",
+        nickname: "chicken"
+      }
+      request(app)
+        .put('/users/3')
+        .send(updatedUser)
+        .end((err, res) => {          
+          res.body.data.should.have.property('nickname', updatedUser.nickname)
+          done()
+        })
+    })
+  })
+  describe('실패시', () => {
+    // 정수가 아닌 id일 경우 400 응답    
+    it('정수가 아닌 id일 경우 400 응답', done => {
+      request(app).put('/users/two').expect(400).end(done);
+    });
+    it('입력된 값 중 nickname이 없을 경우 400 응답', done => {
+      const updatedUser = {
+        email: "chicken@naver.com",
+        password: "1234",
+        nickname: ""
+      }
+      request(app).put('/users/4')
+        .send(updatedUser)
+        .expect(400)
+        .end(done)
+    });
+    it('없는 사용자일 경우 404 응답', done => {
+      request(app)
+        .put('/users/980')
+        .expect(404)
+        .end(done)
+    });
+    it('이름이 중복일 경우 409 응답', done => {
+      const newUser = {
+        email: "sonaldo@naver.com",
+        password: "1234",
+        nickname: "son"
+      }
+      request(app)
+        .put('/users/3')
+        .send(newUser)
+        .expect(409)
+        .end(done)
+    })
+
+  })
+})
 
 describe('DELETE /users/:id', () => {
   before(() => models.sequelize.sync({ force: true }));
@@ -202,7 +276,7 @@ describe('DELETE /users/:id', () => {
   ];
   before(() => models.User.bulkCreate(users))
   describe('성공시', () => {
-    it('사용자를 삭제할 경우 상태코드 204를 응답한다.', done => {
+    it('사용자를 삭제할 경우 상태코드 204를 응답', done => {
       request(app)
         .delete('/users/4')
         .expect(204)
@@ -210,11 +284,17 @@ describe('DELETE /users/:id', () => {
     })
   })
   describe('실패시', () => {
-    it('매개변수 id가 숫자가 아닐 경우 400으로 응답한다.', done => {
+    it('매개변수 id가 숫자가 아닐 경우 400으로 응답', done => {
       request(app)
         .delete('/users/four')
         .expect(400)
         .end(done)
-    })
+    });
+    it('존재하지 않는 사용자일 경우 404로 응답', done => {
+      request(app)
+        .delete('/users/892')
+        .expect(404)
+        .end(done)
+    });
   })
 })

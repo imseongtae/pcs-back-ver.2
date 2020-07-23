@@ -9,7 +9,8 @@ router.get('/', ctrl.index);
 router.get('/:id', ctrl.read);
 // create user
 router.post('/', ctrl.create);
-
+// update user
+router.put('/:id', ctrl.update);
 // delete user
 router.delete('/:id', ctrl.destroy);
 

@@ -12,6 +12,6 @@ router.post('/', ctrl.create);
 // update memo
 // router.put('/:id', ctrl.update);
 // delete memo
-// router.delete('/:id', ctrl.destroy);
+router.delete('/:id', ctrl.destroy);
 
 module.exports = router;

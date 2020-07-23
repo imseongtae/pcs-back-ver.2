@@ -50,6 +50,28 @@ const create = async (req, res) => {
 	}
 };
 
+const update = async (req, res) => {
+	try {
+		const id = parseInt(req.params.id, 10);
+		if (Number.isNaN(id))
+			return res.status(400).json({ msg: '매개변수 값이 숫자형이 아님' });
+
+		const title = req.body.title;
+		if (!title) return res.status(400).json({ msg: 'no title' });
+		const content = req.body.content;
+		if (!content) return res.status(400).json({ msg: 'no content' });
+
+		const memo = await Memo.findByPk(id);
+		if (!memo) return res.status(404).json({ msg: 'not found memo' });
+		memo.title = title;
+		memo.content = content;
+		memo.save();
+		res.status(200).json({ data: memo });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const destroy = async (req, res) => {
 	try {
 		const id = parseInt(req.params.id, 10);
@@ -70,5 +92,6 @@ module.exports = {
 	index,
 	read,
 	create,
+	update,
 	destroy,
 };

@@ -41,7 +41,7 @@
 - name이 중복일 경우 409를 반환
 
 
-###  PUT /users/:id
+##  PUT /users/:id
 
 ### 성공
 - 변경된 name을 응답

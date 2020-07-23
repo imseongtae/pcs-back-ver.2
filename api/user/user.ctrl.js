@@ -29,7 +29,9 @@ const read = async (req, res) => {
 		const id = parseInt(req.params.id, 10);
 		if (Number.isNaN(id))
 			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
-		const user = await User.findOne({ where: { id } });
+
+		const user = await User.findByPk(id);
+		// const user = await User.findOne({ where: { id } });
 		if (!user) return res.status(404).json({ msg: 'do not find user' });
 
 		res.status(200).json({ data: user });
@@ -67,16 +69,54 @@ const create = async (req, res) => {
 	}
 };
 
+const update = async (req, res) => {
+	try {
+		const id = parseInt(req.params.id, 10);
+		if (Number.isNaN(id))
+			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
+		const user = await User.findOne({ where: { id } });
+		// 사용자가 없을 경우 상태코드 404 반환
+		if (!user) return res.status(404).json({ msg: 'no user' });
+
+		// 이메일은 unique 하므로 변경을 받지 않음
+		// const email = req.body.email;
+		const nickname = req.body.nickname;
+		if (!nickname) return res.status(400).json({ msg: 'no nickname' });
+		const password = req.body.password;
+		if (!password) return res.status(400).json({ msg: 'no password' });
+
+		if (nickname === user.nickname)
+			res.status(409).json({ msg: 'Duplicated nickname' });
+		user.nickname = nickname;
+		user.password = password;
+		await user.save(); // await로 save()가 끝날 때까지 기다려야 함
+		// const result = await User.update(updatedUser, { where: { id } });
+		res.status(200).json({ data: user });
+	} catch (error) {
+		if (error.name === 'SequelizeUniqueConstraintError') {
+			return res.status(409).json({ msg: 'Duplicated error' });
+		}
+		console.log(error);
+		res.status(500).end();
+	}
+};
+
 const destroy = async (req, res) => {
 	try {
 		const id = parseInt(req.params.id, 10);
 		if (Number.isNaN(id))
 			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
 
-		await User.destroy({ where: { id } });
-		res.status(204).json({ msg: true });
+		// 사용자가 존재하는지 검증
+		const user = await User.findByPk(id);
+		if (!user) return res.status(404).json({ msg: 'not found user' });
+
+		await user.destroy();
+		// await User.destroy({ where: { id } });
+		res.status(204).json({ msg: 'delete user' });
 	} catch (error) {
 		console.log(error);
+		return res.status(500).end();
 	}
 };
 
@@ -84,5 +124,6 @@ module.exports = {
 	index,
 	read,
 	create,
+	update,
 	destroy,
 };

@@ -73,7 +73,7 @@ const read = async (req, res) => {
 					});
 					// 쿼리 스크립트로 얻은 데이터를 저장 후 응답
 					const { db } = JSON.parse(xmlToJson).dbs;
-					console.log('db: ', db);
+					// console.log('db: ', db);
 					if (!db) return res.status(404).json({ msg: 'not found facility' });
 					// 배열 씌워서 보내기
 					storeFacilityData([db]);

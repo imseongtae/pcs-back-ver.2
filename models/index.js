@@ -8,14 +8,17 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+// use dotenv
+require('dotenv').config();
+
 let sequelize;
 if (config.use_env_variable) {
 	sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
 	sequelize = new Sequelize(
-		config.database,
-		config.username,
-		config.password,
+		process.env.DB_NAME,
+		process.env.DB_USER,
+		process.env.DB_PASS,
 		config,
 	);
 }

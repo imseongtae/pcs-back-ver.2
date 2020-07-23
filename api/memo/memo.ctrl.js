@@ -17,8 +17,40 @@ const index = async (req, res) => {
 	}
 };
 
-// back
+const read = async (req, res) => {
+	try {
+		const id = parseInt(req.params.id, 10);
+		if (Number.isNaN(id))
+			return res.status(400).json({ msg: '매개변수 값이 숫자형이 아님' });
+
+		const memo = await Memo.findByPk(id);
+		if (!memo) return res.status(404).json({ msg: 'not found memo' });
+
+		res.status(200).json({ data: memo });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const create = async (req, res) => {
+	try {
+		//
+		const title = req.body.title;
+		const content = req.body.content;
+
+		const newMemo = {
+			title,
+			content,
+		};
+		const memo = await Memo.create(newMemo);
+		res.status(201).json({ data: memo });
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 module.exports = {
 	index,
+	read,
+	create,
 };

@@ -34,9 +34,10 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		//
 		const title = req.body.title;
+		if (!title) return res.status(400).json({ msg: 'no title' });
 		const content = req.body.content;
+		if (!content) return res.status(400).json({ msg: 'no content' });
 
 		const newMemo = {
 			title,
@@ -49,8 +50,25 @@ const create = async (req, res) => {
 	}
 };
 
+const destroy = async (req, res) => {
+	try {
+		const id = parseInt(req.params.id, 10);
+		if (Number.isNaN(id))
+			return res.status(400).json({ msg: '매개변수 값이 숫자형이 아님' });
+
+		const memo = await Memo.findByPk(id);
+		if (!memo) return res.status(404).json({ msg: 'not found memo' });
+
+		await memo.destroy();
+		res.status(204).json({ result: true });
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	index,
 	read,
 	create,
+	destroy,
 };

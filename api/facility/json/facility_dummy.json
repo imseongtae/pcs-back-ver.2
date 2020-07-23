@@ -1,0 +1,92 @@
+[
+  {
+    "fcltynm": {
+      "_text": "(구)송정초등학교 야외운동장"
+    },
+    "mt10id": {
+      "_text": "FC002078"
+    },
+    "mt13cnt": {
+      "_text": "1"
+    },
+    "fcltychartr": {
+      "_text": "기타(비공연장)"
+    },
+    "sidonm": {
+      "_text": "부산"
+    },
+    "gugunnm": {
+      "_text": "해운대구"
+    },
+    "opende": {}
+  },
+  {
+    "fcltynm": {
+      "_text": "(재)경기문화재단"
+    },
+    "mt10id": {
+      "_text": "FC001672"
+    },
+    "mt13cnt": {
+      "_text": "1"
+    },
+    "fcltychartr": {
+      "_text": "공공(기타)"
+    },
+    "sidonm": {
+      "_text": "경기"
+    },
+    "gugunnm": {
+      "_text": "수원시"
+    },
+    "opende": {
+      "_text": "2001"
+    }
+  },
+  {
+    "fcltynm": {
+      "_text": "(재)구리시청소년수련관"
+    },
+    "mt10id": {
+      "_text": "FC000534"
+    },
+    "mt13cnt": {
+      "_text": "1"
+    },
+    "fcltychartr": {
+      "_text": "공공(기타)"
+    },
+    "sidonm": {
+      "_text": "경기"
+    },
+    "gugunnm": {
+      "_text": "구리시"
+    },
+    "opende": {
+      "_text": "2003"
+    }
+  },
+  {
+    "fcltynm": {
+      "_text": "(재)영화의전당"
+    },
+    "mt10id": {
+      "_text": "FC000175"
+    },
+    "mt13cnt": {
+      "_text": "2"
+    },
+    "fcltychartr": {
+      "_text": "공공(문예회관)"
+    },
+    "sidonm": {
+      "_text": "부산"
+    },
+    "gugunnm": {
+      "_text": "해운대구"
+    },
+    "opende": {
+      "_text": "2011"
+    }
+  }
+]

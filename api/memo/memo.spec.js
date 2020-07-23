@@ -58,4 +58,46 @@ describe('GET /memos', () => {
 })
 
 // read memo
-// back
+describe('GET /memos/:id', () => {
+  const memos = [
+    {
+      "title": "첫 번째 메모입니다.",
+      "content": "hello this memo is first memo"
+    },
+    {
+      "title": "두 번째 메모입니다.",
+      "content": "hello this memo is second memo"
+    },
+    {
+      "title": "세 번째 메모입니다.",
+      "content": "hello this memo is third memo"
+    },
+  ]
+  before(() => models.sequelize.sync({ force: true }));
+  before(() => models.Memo.bulkCreate(memos))
+  describe('성공시', () => {
+    it('id가 1인 메모 객체를 반환', done => {
+      request(app)
+        .get('/memos/1')
+        .expect(200)
+        .end((err, res) => {
+          res.body.data.should.have.property('id', 1)
+          done();
+        })      
+    });
+  });
+  describe('실패시', () => {
+    it('id가 숫자가 아닐경우 400으로 응답', done => {
+      request(app)
+        .get('/memos/one')
+        .expect(400)
+        .end(done)
+    })
+    it('id로 메모를 찾을수 없을 경우 404로 응답', done => {
+      request(app)
+        .get('/memos/987')
+        .expect(404)
+        .end(done)
+    })
+  });
+})

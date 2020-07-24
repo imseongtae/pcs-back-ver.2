@@ -1,102 +1,60 @@
 # PCS Back-end
-Performance Community Site Back-end 코드 저장소입니다.
+Performance Community Site Back-end 코드 저장소입니다. 
+서비스 기획부터 배포까지 모든 과정을 체험하기 위해 프로젝트 진행하였고, 현재 진행 중입니다.
 
-## Init Project
+> 아래 이미지는 프로젝트 판넬입니다.
+
+![image](https://user-images.githubusercontent.com/60806840/88348206-c5247000-cd87-11ea-97dc-c679f2570dcd.png)
+
 
 ## table of contents
-1. 테스트 환경 설정
-1. app 모듈 분리
-1. sequelize 설정
-1. sequelize options 설정
+1. [사용된 기술](#사용된-기술)
+1. [API](#api)
+1. [Test Code](#test-code)
 
-## 테스트 환경 설정
-- 환경 변수로 test 값을 전달하면, process 객체에 값이 할당된다.
-- morgan 부분에 테스트가 아닐 경우에만 서버 로그를 찍도록 설정
+## 사용된 기술
+Back-end와 Front-end를 함께 작업하고 있습니다.
 
-```json
-{
-  "scripts": {
-    "test": "NOED_ENV=test mocha api/user/user.spec.js -w"
-  }
-}
-```
-
-```js
-if (process.env.NOED_ENV !== 'test') {
-  app.use(morgan('dev'));
-}
-```
-
-## app 모듈 분리
-- app 실행 구문을 모듈로 분리
-- sequelize를 사용한 db 연결 구문을 모듈로 분리
-
-```js
-const hostname = confg.development.host;
-syncDb().then(() => {
-  console.log('Database 작동 중');
-  app.server.listen(process.env.PORT || confg.port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${confg.port}/`);
-  });
-});
-```
+### 기술 구조도
+![image](https://user-images.githubusercontent.com/60806840/88347961-1aac4d00-cd87-11ea-9e29-b8fdd60f73ee.png)
 
 
-```js
-const db = require('../models');
+#### Back-end 
+- `node.js`, `express`, `MySQL`, `sequelize`, `Puppeteer.js`
 
-module.exports = () => {
-  const options = {
-    force: process.env.NODE_ENV === 'test' ? true : false,
-  };
-  return db.sequelize.sync(options);
-};
-```
+#### Front-end
+- `Vue.js`, `Vuex`, `SCSS`, `axios`, `javascript es6+`, `html/css`
 
-## sequelize 설정
-- `init sequelize`를 실행 후 config.json의 구문을 사용하기 위해 버전을 낮추니 정상적으로 동작
-- 메이저 버전 업데이트로 인해 에러가 발생한 것으로 추정
+#### Design Tool
+- `Figma`, `Sketch`
 
-```json
-"sequelize": "^4.41.0",
-"sequelize-cli": "^5.2.0"
-```
+#### 프로젝트에 적용할 기술
+- `AWS EC2`, `AWS RDBMS(MySQL)`, `AWS S3` 등
 
-## timezone 설정
-- [참조: timezone 적용, 조회시 시간 제대로 표기하기](https://lemontia.tistory.com/873)
-- 아래 내용을 config.json에 설정
 
-```js
-var seqConfig = { 
-  timezone: config.database.timezone, 
-  dialectOptions: { 
-    charset: 'utf8mb4', 
-    dateStrings: true, 
-    typeCast: true 
-  } ,
-  define: { timestamps: true } 
-}
-```
-### config/config.json
+## API
+![image](https://user-images.githubusercontent.com/60806840/88349495-43364600-cd8b-11ea-9c90-93cb9d97b53e.png)
 
-```json
-{
-  "port": 3000,
-  "development": {
-    "username": "root",
-    "password": "12345",
-    "database": "pcs",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false,
-    "timezone": "+09:00",
-    "dialectOptions": { 
-      "charset": "utf8mb4", 
-      "dateStrings": true, 
-      "typeCast": true 
-    },
-    "logging": false
-  },
-}
+### 현재 작업된 API 
+- 사용자에게 시설 정보를 제공하기 위한 `facility API`
+- 사용자가 작성한 메모에 대해 CRUD 작업을 수행하는 `memo API`
+- User에 대해 CRUD 작업을 수행하는 `user API`
 
-```
+### 추가할 API
+- 사용자에게 공연 정보를 제공하기 위한 `performance API`
+- 게시글에 대해 CRUD 작업을 수행하는 `POST API`
+
+## Test Code
+- 현재 45개의 테스트 케이스 추가
+- 라이브러리는 `mocha`, `supertest`, `should` 를 사용
+- `facility API`, `memo API`, `user API`에 대한 테스트 케이스 작성됨
+
+## Puppeteer 
+![image](https://user-images.githubusercontent.com/60806840/88349540-606b1480-cd8b-11ea-9847-d2db43345c9f.png)
+
+- `Puppeteer`를 활용하여 공연예매 사이트 Interpark에서 조성진 공연 관람객 후기 **1155건** 크롤링
+- 수집한 데이터는 `AWS RDBMS(MySQL)`에 저장
+
+
+![image](https://user-images.githubusercontent.com/60806840/88349160-38c77c80-cd8a-11ea-9676-f844094e9037.png)
+

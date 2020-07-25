@@ -5,7 +5,7 @@
 - GET /facility/:mt10id
 
 
-## GET /facility/
+## GET /facilities/
 
 ### 성공
 - 상태코드 200 응답
@@ -16,7 +16,7 @@
 - limit이 숫자형이 아니면 상태코드 400 응답
 
 
-## GET /facility/:id
+## GET /facilities/:mt10id
 
 ### 성공
 - mt10id 값에 해당하는 facility 객체를 반환

@@ -29,7 +29,7 @@ const storeFacilityData = async data => {
 const getDummyData = async () => {
 	// test case 를 위한 dummy data
 	// fs 모듈 메서드 인자로 절대 경로 전달
-	const dummy = fs.readFileSync('./api/facility/json/facility_dummy.json'); // 공연중목록을 쌓을 거임
+	const dummy = fs.readFileSync('./src/api/facility/json/facility_dummy.json'); // 공연중목록을 쌓을 거임
 	const data = JSON.parse(dummy.toString());
 	// console.log(data);
 	try {

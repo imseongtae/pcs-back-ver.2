@@ -11,6 +11,8 @@ Performance Community Site Back-end 코드 저장소입니다.
 1. [사용된 기술](#사용된-기술)
 1. [API](#api)
 1. [Test Code](#test-code)
+1. [Swagger](#swagger)
+1. [Puppeteer](#puppeteer)
 
 ## 사용된 기술
 Back-end와 Front-end를 함께 작업하고 있습니다.
@@ -42,17 +44,29 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 
 ### 추가할 API
 - 사용자에게 공연 정보를 제공하기 위한 `performance API`
+- 사용자에게 아티스트 정보를 제공하기 위한 `Artist API`
 - 게시글에 대해 CRUD 작업을 수행하는 `POST API`
 
+
+## Swagger
+API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger`를 적용하였습니다.
+
+![image](https://user-images.githubusercontent.com/60806840/88465691-b660c900-ceff-11ea-8b4d-923bc8903e24.png)
+![image](https://user-images.githubusercontent.com/60806840/88465706-d6908800-ceff-11ea-9f72-407cd9e94a77.png)
+
+
+
 ## Test Code
-- 현재 45개의 테스트 케이스 추가
-- 라이브러리는 `mocha`, `supertest`, `should` 를 사용
+- 현재 3개의 API에 대해 45개의 테스트 케이스 추가됨
 - `facility API`, `memo API`, `user API`에 대한 테스트 케이스 작성됨
+- 라이브러리는 `mocha`, `supertest`, `should` 를 사용
+- 추가될 API에도 테스트 케이스 추가 예정
 
 ## Puppeteer 
 ![image](https://user-images.githubusercontent.com/60806840/88349540-606b1480-cd8b-11ea-9847-d2db43345c9f.png)
 
 - `Puppeteer`를 활용하여 공연예매 사이트 Interpark에서 조성진 공연 관람객 후기 **1155건** 크롤링
+- 제작한 크롤러를 통해 다른 아티스트의 공연후기 데이터 **수집 가능**
 - 수집한 데이터는 `AWS RDBMS(MySQL)`에 저장
 
 

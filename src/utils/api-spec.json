@@ -1,0 +1,95 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "pcs API 문서",
+    "description": "author: imseongtae",
+    "version": "1.0"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/facilities": {
+      "get": {
+        "tags": [
+          "/facilities"
+        ],
+        "description": "공연시설 정보 목록을 조회하기 위한 API입니다.",
+        "responses": {
+          "200": {
+            "description": "[완료]공연시설 정보 목록을 받아왔습니다.",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          },
+          "400": {
+            "description": "[에러]limit 값이 숫자형이 아니므로 공연시설 정보 목록을 받아올 수 없습니다.",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          },
+          "500": {
+            "description": "[에러]서버에 문제가 있어 공연시설 정보 목록을 받아오지 못했습니다.",
+            "content": {
+              "application/json": {},
+              "application/xml": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Facilities": {
+      "type": "object",
+      "properties": {
+        "mt10id": {
+          "type": "string",
+          "description": "공연시설 ID"
+        },
+        "fcltynm": {
+          "type": "string",
+          "description": "공연 시설 이름"
+        },
+        "mt13cnt": {
+          "type": "string",
+          "description": "공연장 수"
+        },
+        "fcltychartr": {
+          "type": "string",
+          "description": "시설특성"
+        },
+        "sidonm": {
+          "type": "string",
+          "description": "지역(시도)"
+        },
+        "gugunnm": {
+          "type": "string",
+          "description": "지역(구군)"
+        },
+        "opende": {
+          "type": "string",
+          "description": "개관연도"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "jwt": [],
+      "petstore_auth": [
+        "write:pets",
+        "read:pets"
+      ]
+    }
+  ],
+  "securityDefinitions": {
+    "jwt": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

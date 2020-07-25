@@ -25,7 +25,7 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 - `node.js`, `express`, `MySQL`, `sequelize`, `Puppeteer.js`
 
 #### Front-end
-- `Vue.js`, `Vuex`, `SCSS`, `axios`, `javascript es6+`, `html/css`
+- `Vue.js`, `Vuex`, `vue-cli`, `SCSS`, `axios`, `javascript es6+`, `html/css`
 
 #### DevOps
 - `AWS RDS`

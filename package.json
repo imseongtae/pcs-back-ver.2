@@ -2,13 +2,13 @@
   "name": "pcs-back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon bin/www.js",
-    "test:user": "NOED_ENV=test mocha api/user/user.spec.js -w",
-    "test:memo": "NOED_ENV=test mocha api/memo/memo.spec.js -w",
-    "test:facility": "NOED_ENV=test mocha api/facility/facility.spec.js -w",
-    "test": "NOED_ENV=test mocha $(find ./api/ -name '*.spec.js') -w"
+    "dev": "nodemon src/bin/www.js",
+    "test:user": "NOED_ENV=test mocha src/api/user/user.spec.js -w",
+    "test:memo": "NOED_ENV=test mocha src/api/memo/memo.spec.js -w",
+    "test:facility": "NOED_ENV=test mocha src/api/facility/facility.spec.js -w",
+    "test": "NOED_ENV=test mocha $(find ./src/api/ -name '*.spec.js') -w"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +32,8 @@
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "should": "^13.2.3",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }

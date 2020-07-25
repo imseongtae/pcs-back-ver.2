@@ -27,11 +27,14 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 #### Front-end
 - `Vue.js`, `Vuex`, `SCSS`, `axios`, `javascript es6+`, `html/css`
 
+#### DevOps
+- `AWS RDS`
+
 #### Design Tool
 - `Figma`, `Sketch`
 
 #### 프로젝트에 적용할 기술
-- `AWS EC2`, `AWS RDBMS(MySQL)`, `AWS S3` 등
+- `AWS EC2`, `AWS S3` 등
 
 
 ## API

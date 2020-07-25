@@ -9,7 +9,9 @@ const { storeFacilityData } = require('./scripts');
 const SERVICE_KEY = process.env.SERVICE_KEY;
 const HOST = 'http://kopis.or.kr/openApi/restful/';
 const category = 'prfplc/';
-// const dummy = require('./scripts');
+
+// 처음 faciliy API에 데이터가 없다면 아래 함수 실행을 통해 더미 데이터를 등록한다.
+// const { getDummyData } = require('./scripts');
 
 const index = async (req, res) => {
 	try {
@@ -18,7 +20,7 @@ const index = async (req, res) => {
 		if (Number.isNaN(limit))
 			return res.status(400).json('limit 값이 숫자형이 아님');
 
-		// await dummy(); // 초기 dummy data DB에 반영
+		// await getDummyData(); // 초기 dummy data DB에 반영
 		const facilities = await Facility.findAll({ limit });
 		if (facilities.length === 0)
 			return res.status(404).json({ msg: 'not found facilities' });

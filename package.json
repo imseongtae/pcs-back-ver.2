@@ -8,6 +8,7 @@
     "test:user": "NOED_ENV=test mocha src/api/user/user.spec.js -w",
     "test:memo": "NOED_ENV=test mocha src/api/memo/memo.spec.js -w",
     "test:facility": "NOED_ENV=test mocha src/api/facility/facility.spec.js -w",
+    "test:performance": "NOED_ENV=test mocha src/api/performance/performance.spec.js -w",
     "test": "NOED_ENV=test mocha $(find ./src/api/ -name '*.spec.js') -w"
   },
   "keywords": [],

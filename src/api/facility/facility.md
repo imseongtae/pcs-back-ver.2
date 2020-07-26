@@ -1,8 +1,8 @@
 # Facility Test 내용
 
 ## table of contents
-- GET /facility/
-- GET /facility/:mt10id
+- GET /facilities/
+- GET /facilities/:mt10id
 
 
 ## GET /facilities/

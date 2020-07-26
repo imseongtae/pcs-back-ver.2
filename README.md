@@ -33,8 +33,14 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 #### Design Tool
 - `Figma`, `Sketch`
 
-#### 프로젝트에 적용할 기술
+#### 프로젝트 작업을 이어가며 적용할 기술
 - `AWS EC2`, `AWS S3` 등
+
+#### Version Control
+- `Git`, `Github`
+
+#### Tool
+- `Postman`, `Notion`, `vue devtools`, `VS Code`, `Typora`
 
 
 ## API
@@ -42,26 +48,30 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 
 ### 현재 작업된 API 
 - 사용자에게 시설 정보를 제공하기 위한 `facility API`
+- 사용자에게 공연 정보를 제공하기 위한 `performance API`
 - 사용자가 작성한 메모에 대해 CRUD 작업을 수행하는 `memo API`
 - User에 대해 CRUD 작업을 수행하는 `user API`
 
 ### 추가할 API
-- 사용자에게 공연 정보를 제공하기 위한 `performance API`
 - 사용자에게 아티스트 정보를 제공하기 위한 `Artist API`
 - 게시글에 대해 CRUD 작업을 수행하는 `POST API`
 
+#### Tool
+`Postman`을 활용하여 API 테스트  
+![image](https://user-images.githubusercontent.com/60806840/88482162-90d4cd80-cf9a-11ea-84ee-4ca50b0869dd.png)
+
 
 ## Swagger
-API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger`를 적용하였습니다.
+API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger` 적용
 
 ![image](https://user-images.githubusercontent.com/60806840/88465691-b660c900-ceff-11ea-8b4d-923bc8903e24.png)
 ![image](https://user-images.githubusercontent.com/60806840/88465706-d6908800-ceff-11ea-9f72-407cd9e94a77.png)
 
 
 ## Test Code
-![image](https://user-images.githubusercontent.com/60806840/88480445-d391a800-cf90-11ea-95ef-f69a0e3b9453.png)
-- 현재 **3개의 API에 대해 46개**의 테스트 케이스 추가
-- `facility API`, `memo API`, `user API`에 대한 테스트 케이스 작성
+![image](https://user-images.githubusercontent.com/60806840/88484700-6fc8a880-cfab-11ea-8aca-dd6a0f0e8e6d.png)  
+- 현재 **4개의 API에 대해 52개**의 테스트 케이스 추가
+- `facility API`, `performance API`, `memo API`, `user API`에 대한 테스트 케이스 작성
 - 라이브러리는 `mocha`, `supertest`, `should` 를 사용
 - 추가할 API에도 테스트 케이스 추가 예정
 

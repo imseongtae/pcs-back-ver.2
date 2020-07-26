@@ -7,7 +7,7 @@ const FacilityAPI = require('./facility');
 module.exports = () => {
 	const API = Router();
 
-	// routing setting
+	// routes setting
 	API.use('/users', UserAPI);
 	API.use('/memos', MemoAPI);
 	API.use('/facilities', FacilityAPI);

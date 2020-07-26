@@ -15,7 +15,7 @@ if (process.env.NOED_ENV !== 'test') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// settup routes
+// setup routes
 app.use('/', api());
 
 // api spec docs

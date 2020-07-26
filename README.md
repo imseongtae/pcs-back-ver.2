@@ -2,7 +2,7 @@
 Performance Community Site Back-end 코드 저장소입니다. 
 서비스 기획부터 배포까지 모든 과정을 체험하기 위해 프로젝트 진행하였고, 현재 진행 중입니다.
 
-> 아래 이미지는 프로젝트 판넬입니다.
+> 아래는 프로젝트를 소개하는 판넬 이미지입니다.
 
 ![image](https://user-images.githubusercontent.com/60806840/88348206-c5247000-cd87-11ea-97dc-c679f2570dcd.png)
 
@@ -22,13 +22,13 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 
 
 #### Back-end 
-- `node.js`, `express`, `MySQL`, `sequelize`, `Puppeteer.js`
+- `node.js`, `express`, `MySQL`, `sequelize`, `Puppeteer.js`, `Swagger`
 
 #### Front-end
 - `Vue.js`, `Vuex`, `vue-cli`, `SCSS`, `axios`, `javascript es6+`, `html/css`
 
 #### DevOps
-- `AWS RDS`
+- `AWS RDS(MySQL)`
 
 #### Design Tool
 - `Figma`, `Sketch`
@@ -58,19 +58,19 @@ API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger`�
 ![image](https://user-images.githubusercontent.com/60806840/88465706-d6908800-ceff-11ea-9f72-407cd9e94a77.png)
 
 
-
 ## Test Code
-- 현재 3개의 API에 대해 45개의 테스트 케이스 추가됨
-- `facility API`, `memo API`, `user API`에 대한 테스트 케이스 작성됨
+![image](https://user-images.githubusercontent.com/60806840/88480445-d391a800-cf90-11ea-95ef-f69a0e3b9453.png)
+- 현재 **3개의 API에 대해 46개**의 테스트 케이스 추가
+- `facility API`, `memo API`, `user API`에 대한 테스트 케이스 작성
 - 라이브러리는 `mocha`, `supertest`, `should` 를 사용
-- 추가될 API에도 테스트 케이스 추가 예정
+- 추가할 API에도 테스트 케이스 추가 예정
 
 ## Puppeteer 
 ![image](https://user-images.githubusercontent.com/60806840/88349540-606b1480-cd8b-11ea-9847-d2db43345c9f.png)
 
 - `Puppeteer`를 활용하여 공연예매 사이트 Interpark에서 조성진 공연 관람객 후기 **1155건** 크롤링
 - 제작한 크롤러를 통해 다른 아티스트의 공연후기 데이터 **수집 가능**
-- 수집한 데이터는 `AWS RDBMS(MySQL)`에 저장
+- 수집한 데이터는 `AWS RDS(MySQL)`에 저장
 
 
 ![image](https://user-images.githubusercontent.com/60806840/88349160-38c77c80-cd8a-11ea-9676-f844094e9037.png)

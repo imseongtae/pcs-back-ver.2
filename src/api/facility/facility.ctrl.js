@@ -4,14 +4,14 @@ require('dotenv').config();
 
 // 시설 목록 정보와 시설 상세 정보 Model
 const { Facility, Facility_detail } = require('../../models');
-const { storeFacilityData } = require('./scripts');
+const { storeFacilityData, tidyData } = require('./scripts');
+// 처음 faciliy API에 데이터가 없다면 아래 함수 실행을 통해 더미 데이터를 등록한다.
+// const { getFacilitiesDummyData } = require('./scripts');
 
+// KOPIS에 쿼리스크립트를 요청하기 위해 필요한 URL
 const SERVICE_KEY = process.env.SERVICE_KEY;
 const HOST = 'http://kopis.or.kr/openApi/restful/';
 const category = 'prfplc/';
-
-// 처음 faciliy API에 데이터가 없다면 아래 함수 실행을 통해 더미 데이터를 등록한다.
-// const { getDummyData } = require('./scripts');
 
 const index = async (req, res) => {
 	try {
@@ -20,35 +20,12 @@ const index = async (req, res) => {
 		if (Number.isNaN(limit))
 			return res.status(400).json('limit 값이 숫자형이 아님');
 
-		// await getDummyData(); // 초기 dummy data DB에 반영
+		// await getFacilitiesDummyData(); // 초기 dummy data DB에 반영
 		const facilities = await Facility.findAll({ limit });
 		if (facilities.length === 0)
 			return res.status(404).json({ msg: 'not found facilities' });
 
 		return res.status(200).json({ data: facilities });
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-const tidyData = data => {
-	// console.log(data);
-	try {
-		return data.map(v => {
-			return {
-				mt10id: v.mt10id._text,
-				fcltynm: v.fcltynm._text,
-				mt13cnt: v.mt13cnt._text,
-				fcltychartr: v.fcltychartr._text,
-				opende: v.opende._text,
-				seatscale: v.seatscale._text,
-				telno: v.telno._text,
-				relateurl: v.relateurl._text,
-				adres: v.adres._text,
-				la: v.la._text,
-				lo: v.lo._text,
-			};
-		});
 	} catch (error) {
 		console.log(error);
 	}
@@ -82,6 +59,8 @@ const read = async (req, res) => {
 					// 데이터 정돈
 					const result = tidyData([db]);
 					return res.status(200).json({ data: result });
+				} else {
+					return res.status(404).json({ msg: 'not found facility' });
 				}
 			});
 		}

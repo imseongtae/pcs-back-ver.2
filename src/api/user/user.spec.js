@@ -197,9 +197,11 @@ describe('PUT /users', () => {
   before(() => models.User.bulkCreate(users))
 
   describe('성공시', () => {
+    // email은 변경을 허용하지 않는다.
+    // nickname이 Unique한 값으로 설정되기 위해 Model에서 unique true
     it('변경된 nickname을 응답한다.', done => {
       const updatedUser = {
-        email: "chicken@naver.com",
+        email: "messi@gmail.com",
         password: "1234",
         nickname: "chicken"
       }
@@ -208,6 +210,20 @@ describe('PUT /users', () => {
         .send(updatedUser)
         .end((err, res) => {          
           res.body.data.should.have.property('nickname', updatedUser.nickname)
+          done();
+        })
+    });
+    it('변경된 password를 응답한다.', done => {
+      const updatedUser = {
+        email: "messi@gmail.com",
+        password: "12345",
+        nickname: "messi"
+      }
+      request(app)
+        .put('/users/3')
+        .send(updatedUser)
+        .end((err, res) => {          
+          res.body.data.should.have.property('password', updatedUser.password)
           done()
         })
     })

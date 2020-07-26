@@ -1,34 +1,34 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
 	return sequelize.define(
 		'Facility',
 		{
 			mt10id: {
-				type: Sequelize.STRING(20),
+				type: DataTypes.STRING(20),
 				allowNull: false,
 				primaryKey: true,
 			},
 			fcltynm: {
-				type: Sequelize.STRING(100),
+				type: DataTypes.STRING(100),
 				allowNull: false,
 			},
 			mt13cnt: {
-				type: Sequelize.STRING(30),
+				type: DataTypes.STRING(30),
 				allowNull: false,
 			},
 			fcltychartr: {
-				type: Sequelize.STRING(20),
+				type: DataTypes.STRING(20),
 				allowNull: false,
 			},
 			sidonm: {
-				type: Sequelize.STRING(20),
+				type: DataTypes.STRING(20),
 				allowNull: false,
 			},
 			gugunnm: {
-				type: Sequelize.STRING(20),
+				type: DataTypes.STRING(20),
 				allowNull: false,
 			},
 			opende: {
-				type: Sequelize.INTEGER,
+				type: DataTypes.INTEGER,
 				allowNull: true,
 			},
 		},

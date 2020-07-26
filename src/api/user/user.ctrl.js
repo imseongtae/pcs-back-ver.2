@@ -15,7 +15,6 @@ const index = async (req, res) => {
 			limit,
 		});
 		if (!users) return res.status(404).end();
-		// res.status(200).json(users);
 		return res.status(200).json({ data: users });
 	} catch (error) {
 		console.log(error);
@@ -25,14 +24,13 @@ const index = async (req, res) => {
 
 const read = async (req, res) => {
 	try {
-		// if (parseInt(id, 10)) return res.status(400).end();
 		const id = parseInt(req.params.id, 10);
 		if (Number.isNaN(id))
 			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
 
 		const user = await User.findByPk(id);
 		// const user = await User.findOne({ where: { id } });
-		if (!user) return res.status(404).json({ msg: 'do not find user' });
+		if (!user) return res.status(404).json({ msg: 'not found user' });
 
 		res.status(200).json({ data: user });
 	} catch (error) {
@@ -43,11 +41,9 @@ const read = async (req, res) => {
 
 const create = async (req, res) => {
 	try {
-		const nickname = req.body.nickname;
-		if (!nickname) return res.status(400).json({ msg: 'no nickname' });
-		const email = req.body.email;
+		const { email, nickname, password } = req.body;
 		if (!email) return res.status(400).json({ msg: 'no email' });
-		const password = req.body.password;
+		if (!nickname) return res.status(400).json({ msg: 'no nickname' });
 		if (!password) return res.status(400).json({ msg: 'no password' });
 		// 생성할 user data
 		const newUser = {
@@ -76,17 +72,17 @@ const update = async (req, res) => {
 			return res.status(400).json({ msg: '매개변수가 숫자가 아님' });
 		const user = await User.findOne({ where: { id } });
 		// 사용자가 없을 경우 상태코드 404 반환
-		if (!user) return res.status(404).json({ msg: 'no user' });
+		if (!user) return res.status(404).json({ msg: 'not found user' });
 
+		const { nickname, password } = req.body;
 		// 이메일은 unique 하므로 변경을 받지 않음
-		// const email = req.body.email;
-		const nickname = req.body.nickname;
 		if (!nickname) return res.status(400).json({ msg: 'no nickname' });
-		const password = req.body.password;
 		if (!password) return res.status(400).json({ msg: 'no password' });
 
 		if (nickname === user.nickname)
-			res.status(409).json({ msg: 'Duplicated nickname' });
+			return res.status(409).json({ msg: 'Duplicated nickname' });
+
+		// nickname을 할당하기 전에 입력값이 Unique한지 검증 필요함
 		user.nickname = nickname;
 		user.password = password;
 		await user.save(); // await로 save()가 끝날 때까지 기다려야 함

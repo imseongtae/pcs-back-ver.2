@@ -6,7 +6,7 @@ const models = require('../../models');
 const { Facility, Facility_detail } = require('../../models');
 
 // 시설 목록 정보의 dummy data
-const { getDummyData } = require('./scripts');
+const { getFacilitiesDummyData } = require('./scripts');
 
 
 /**
@@ -18,10 +18,10 @@ const { getDummyData } = require('./scripts');
 // index facilities
 describe('GET /facilities', () => {
   before(() => models.sequelize.sync({ force: true }));
-  before(() => getDummyData())
+  before(() => getFacilitiesDummyData())
   describe('성공', () => {
     it('상태코드 200 응답', done => {
-      before(() => getDummyData());
+      before(() => getFacilitiesDummyData());
       request(app)
         .get('/facilities')
         .expect(200)
@@ -73,8 +73,9 @@ describe('GET /facilities/:mt10id', () => {
   }
   // before는 done을 자동으로 실행
   before(() => models.sequelize.sync({ force: true }));
-  before(() => models.Facility_detail.create(SeoulArtsCenter))
-  
+  // 아래 처럼 데이터를 삽입하고 시작하면..! 데이터가 무결하다고 가정하게 됨
+  // 테스트 케이스를 빗나간... 사례
+  // before(() => models.Facility_detail.create(SeoulArtsCenter))
   describe('성공', () => {
     it('mt10id 값에 해당하는 facility 객체를 반환', done => {
       request(app)
@@ -82,7 +83,7 @@ describe('GET /facilities/:mt10id', () => {
         .expect(200)
         .end((err, res) => {          
           res.body.data.should.have.property('mt10id', SeoulArtsCenter.mt10id)
-          done(); // done
+          done();
         });
     });
   });

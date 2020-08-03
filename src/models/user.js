@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt-nodejs');
+
 function isGoogleDomain(domain) {
 	const googleDomain = '@gmail.com';
 
@@ -28,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
 			password: {
 				type: DataTypes.STRING(100),
 				allowNull: false,
+				set(password) {
+					bcrypt.hash(password, null, null, (err, hash) => {
+						if (err) throw new Error(err);
+						this.setDataValue('password', hash);
+					});
+				},
 			},
 			nickname: {
 				type: DataTypes.STRING,
@@ -44,5 +52,10 @@ module.exports = (sequelize, DataTypes) => {
 			collate: 'utf8_general_ci', // 한글 저장을 위해
 		},
 	);
+
+	User.prototype.isValidPassword = function (password) {
+		return bcrypt.compareSync(password, this.dataValues.password);
+	};
+
 	return User;
 };

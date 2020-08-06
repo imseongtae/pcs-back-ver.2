@@ -17,16 +17,16 @@ const signup = async (req, res) => {
 		// 중복일 경우 catch에서 처리됨
 		const user = await User.create(newUser);
 		// console.log('생성된 데이터 user: ', user);
-		console.log('생성된 데이터 user: ', user.nickname);
+		// console.log('생성된 데이터 user: ', user.nickname);
 		res.status(201).json({ nickname: user.nickname });
 		// res.status(201).json({ data: user });
 	} catch (e) {
-		// 모델에서 Unique로 설정된 컬럼이 있을 경우 반환하는 error
-		const isSequelizeValidateError =
-			e.name === 'SequelizeValidationError' ||
-			e.name === 'SequelizeUniqueConstraintError';
-		if (isSequelizeValidateError) {
+		if (e.name === 'SequelizeValidationError') {
+			// Unique 컬럼에 대해 값을 입력하지 않을 경우
 			return res.status(400).json({ msg: e.errors[0].message });
+		} else if (e.name === 'SequelizeUniqueConstraintError') {
+			// Unique 컬럼에 대해 중복된 값을 입력하는 경우
+			return res.status(409).json({ msg: 'Duplicated email' });
 		} else {
 			console.error(e);
 			return res.status(500).json(e);
@@ -65,6 +65,7 @@ const me = async (req, res) => {
 		return res.status(200).json(req.user);
 	} catch (error) {
 		console.log(error);
+		return res.status(401);
 	}
 };
 

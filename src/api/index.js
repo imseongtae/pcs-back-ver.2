@@ -7,6 +7,7 @@ const passportLib = require('../libs/passport');
 const UserAPI = require('./user');
 const AuthAPI = require('./auth');
 const MemoAPI = require('./memo');
+const PostAPI = require('./post');
 const FacilityAPI = require('./facility');
 const PerformanceAPI = require('./performance');
 
@@ -20,6 +21,7 @@ module.exports = () => {
 	API.use('/users', UserAPI);
 	API.use('/auth', AuthAPI);
 	API.use('/memos', MemoAPI);
+	API.use('/posts', PostAPI);
 	API.use('/facilities', FacilityAPI);
 	API.use('/performances', PerformanceAPI);
 

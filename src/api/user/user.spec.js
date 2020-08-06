@@ -14,15 +14,19 @@ const models = require('../../models');
 // }
 
 /**
+ * bcrypt 로직을 User로 옮긴 까닭에 User test case가 전체적으로 깨짐
+ * bcrypt 로직을 옮기든가 Test case를 수정하든가 작업이 요구됨
+ */
+
+/**
  * 참조
  * http://jeonghwan-kim.github.io/dev/2020/05/25/supertest.html
  * https://shouldjs.github.io/
  */
 describe('GET /users', () => {
-  before(() => models.sequelize.sync({ force: true }));
   const users = [
     {
-      email: 'haemil@gmail.com',
+      email: 'ham@gmail.com',
       password: '1234',
       nickname: 'ham',
     },
@@ -37,6 +41,7 @@ describe('GET /users', () => {
       nickname: 'messi',
     },
   ];
+  before(() => models.sequelize.sync({ force: true }));
   before(() => models.User.bulkCreate(users))
   describe('성공시', () => {
     it('상태 코드 200을 응답한다.', done => {

@@ -31,26 +31,29 @@ describe('GET /performances', () => {
         .get('/performances')
         .expect(200)
         .end((err, res) => {
-          res.body.data.should.be.instanceOf(Array);
+          res.body.should.be.instanceOf(Array);
           done();
         })
     })
-    it('최대 limit 개수만큼 응답', done => {
-      request(app)
-        .get('/performances?limit=2')
-        .end((err, res) => {
-          res.body.data.should.have.lengthOf(2);
-          done();
-        });
-    });
+    // limit query를 설정하지 않음. 이를 통해 Test case 주석처리
+    // it('최대 limit 개수만큼 응답', done => {
+    //   request(app)
+    //     .get('/performances?limit=2')
+    //     .end((err, res) => {
+    //       res.body.should.have.lengthOf(2);
+    //       done();
+    //     });
+    // });
   });
   describe('실패', () => {
-    it('limit이 숫자형이 아니면 상태코드 400 응답', done => {           
-      request(app)
-        .get('/performances?limit=three')
-        .expect(400)
-        .end(done)
-    });
+    // limit query를 설정하지 않음. 이를 통해 Test case 주석처리
+    // it('limit이 숫자형이 아니면 상태코드 400 응답', done => {           
+    //   request(app)
+    //     // .get('/performances?limit=three')
+    //     .get('/performances?limit=three')
+    //     .expect(400)
+    //     .end(done)
+    // });
   });
 });
 
@@ -72,7 +75,7 @@ describe('GET /performances/:mt20id', () => {
         .end((err, res) => {
           // res.body.data 배열로 한 번 감싸져 있어서 scripts/index.js 의 tidyData 함수에서 배열 비구조화
           // KOPIS에서 조회할 때 배열로 리턴됨
-          res.body.data.should.have.property('mt20id', rooftopCat.mt20id);
+          res.body.should.have.property('mt20id', rooftopCat.mt20id);
           done();
         });
     });

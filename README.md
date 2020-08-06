@@ -31,7 +31,7 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 - `AWS RDS(MySQL)`
 
 #### Design Tool
-- `Figma`, `Sketch`
+- `Figma`
 
 #### 프로젝트 작업을 이어가며 적용할 기술
 - `AWS EC2`, `AWS S3` 등
@@ -72,7 +72,7 @@ API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger` �
 ## Test Code
 ![image](https://user-images.githubusercontent.com/60806840/88484700-6fc8a880-cfab-11ea-8aca-dd6a0f0e8e6d.png)  
 - 현재 **5개의 API에 대해 52개**의 테스트 케이스 추가
-- `facility API`, `performance API`, `memo API`, `user API`에 대한 테스트 케이스 작성
+- `facility API`, `performance API`, `memo API`, `user API`, `auth API`에 대한 테스트 케이스 작성
 - 라이브러리는 `mocha`, `supertest`, `should` 를 사용
 - 추가할 API에도 테스트 케이스 추가 예정
 

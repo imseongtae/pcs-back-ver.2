@@ -32,7 +32,7 @@ describe('GET /facilities', () => {
         .get('/facilities')
         .expect(200)
         .end((err, res) => {
-          res.body.data.should.be.instanceOf(Array);
+          res.body.should.be.instanceOf(Array);
           done();
         })
     })
@@ -40,7 +40,7 @@ describe('GET /facilities', () => {
       request(app)
         .get('/facilities?limit=2')
         .end((err, res) => {
-          res.body.data.should.have.lengthOf(2);
+          res.body.should.have.lengthOf(2);
           done();
         });
     });
@@ -82,7 +82,7 @@ describe('GET /facilities/:mt10id', () => {
         .get('/facilities/FC000001')
         .expect(200)
         .end((err, res) => {          
-          res.body.data.should.have.property('mt10id', SeoulArtsCenter.mt10id)
+          res.body.should.have.property('mt10id', SeoulArtsCenter.mt10id)
           done();
         });
     });

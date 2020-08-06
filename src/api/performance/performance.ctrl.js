@@ -17,19 +17,36 @@ const HOST = 'http://kopis.or.kr/openApi/restful/';
 const category = 'pblprfr/';
 
 // index performance
+// const index = async (req, res) => {
+// 	try {
+// 		req.query.limit = req.query.limit || 10;
+// 		const limit = parseInt(req.query.limit, 10);
+// 		if (Number.isNaN(limit))
+// 			return res.status(400).json('limit 값이 숫자형이 아님');
+
+// 		await getPerformancesDummyData(); // 초기 dummy data DB에 반영
+// 		const performances = await Performance.findAll({ limit });
+// 		if (performances.length === 0)
+// 			return res.status(404).json({ msg: 'not found performances' });
+
+// 		// return res.status(200).json({ data: performances });
+// 		return res.status(200).json(performances);
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
+
+// 목록 정보는 한 번에 전송하여 사용자가 페이징 처리하도록 처리
+// 데이터가 많아진다면 페이징이 필수
 const index = async (req, res) => {
 	try {
-		req.query.limit = req.query.limit || 10;
-		const limit = parseInt(req.query.limit, 10);
-		if (Number.isNaN(limit))
-			return res.status(400).json('limit 값이 숫자형이 아님');
-
 		await getPerformancesDummyData(); // 초기 dummy data DB에 반영
-		const performances = await Performance.findAll({ limit });
+		const performances = await Performance.findAll();
+
 		if (performances.length === 0)
 			return res.status(404).json({ msg: 'not found performances' });
 
-		return res.status(200).json({ data: performances });
+		return res.status(200).json(performances);
 	} catch (error) {
 		console.log(error);
 	}
@@ -42,7 +59,8 @@ const read = async (req, res) => {
 		const mt20id = req.params.mt20id;
 		const performance = await Performance_detail.findByPk(mt20id);
 		if (performance) {
-			return res.status(200).json({ data: performance });
+			// return res.status(200).json({ data: performance });
+			return res.status(200).json(performance);
 		} else {
 			// 공연 상세 정보가 DB에 등록되어 있지 않을 때 KOPIS API에 직접 요청
 			const requestUrl = `${HOST}${category}${mt20id}?service=${SERVICE_KEY}`;
@@ -64,7 +82,8 @@ const read = async (req, res) => {
 						await storePerformanceDetailData([db]);
 						// 데이터 정돈
 						const result = await tidyData([db]);
-						return res.status(200).json({ data: result });
+						// return res.status(200).json({ data: result });
+						return res.status(200).json(result);
 					} else {
 						return res.status(404).json({ msg: 'not found performance' });
 					}

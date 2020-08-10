@@ -52,10 +52,11 @@ Back-end와 Front-end를 함께 작업하고 있습니다.
 - 사용자가 작성한 메모에 대해 CRUD 작업을 수행하는 `memo API`
 - User에 대해 CRUD 작업을 수행하는 `user API`
 - User에 대해 로그인 기능을 수행하는 `auth API`
+- 게시글에 대해 CRUD 작업을 수행하는 `POST API`
 
 ### 추가할 API
 - 사용자에게 아티스트 정보를 제공하기 위한 `Artist API`
-- 게시글에 대해 CRUD 작업을 수행하는 `POST API`
+
 
 #### Tool
 `Postman`을 활용하여 API 테스트  
@@ -72,7 +73,7 @@ API spec을 명세하고, 관리하기 하기 위해 프로젝트에 `Swagger` �
 ## Test Code
 ![image](https://user-images.githubusercontent.com/60806840/88484700-6fc8a880-cfab-11ea-8aca-dd6a0f0e8e6d.png)  
 - 현재 **5개의 API에 대해 52개**의 테스트 케이스 추가
-- `facility API`, `performance API`, `memo API`, `user API`, `auth API`에 대한 테스트 케이스 작성
+- `facility API`, `performance API`, `memo API`, `user API`, `auth API`, `post API`에 대한 테스트 케이스 작성
 - 라이브러리는 `mocha`, `supertest`, `should` 를 사용
 - 추가할 API에도 테스트 케이스 추가 예정
 

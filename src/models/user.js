@@ -52,7 +52,17 @@ module.exports = (sequelize, DataTypes) => {
 			collate: 'utf8_general_ci', // 한글 저장을 위해
 		},
 	);
+	User.prototype.toJSON = function () {
+		const value = Object.assign({}, this.get());
 
+		// json으로 반환하는 값에서 중요한 정보 삭제
+		// delete password,
+		delete value.password;
+		delete value.createdAt;
+		delete value.updatedAt;
+
+		return value;
+	};
 	User.prototype.isValidPassword = function (password) {
 		return bcrypt.compareSync(password, this.dataValues.password);
 	};

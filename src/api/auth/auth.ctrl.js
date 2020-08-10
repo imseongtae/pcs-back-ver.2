@@ -18,7 +18,7 @@ const signup = async (req, res) => {
 		const user = await User.create(newUser);
 		// console.log('생성된 데이터 user: ', user);
 		// console.log('생성된 데이터 user: ', user.nickname);
-		res.status(201).json({ nickname: user.nickname });
+		res.status(201).json(user);
 		// res.status(201).json({ data: user });
 	} catch (e) {
 		if (e.name === 'SequelizeValidationError') {

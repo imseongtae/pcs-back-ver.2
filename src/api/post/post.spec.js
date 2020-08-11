@@ -3,24 +3,13 @@ const should = require('should');
 const app = require('../../app');
 const models = require('../../models');
 
+
 // index post
 describe('GET /posts', () => {
-  const posts = [
-    {
-      "title": "첫 번째 게시글입니다.",
-      "contents": "hello this post is first post"
-    },
-    {
-      "title": "두 번째 게시글입니다.",
-      "contents": "hello this post is second post"
-    },
-    {
-      "title": "세 번째 게시글입니다.",
-      "contents": "hello this post is third post"
-    },
-  ]
+  // 데이터 초기화
   before(() => models.sequelize.sync({ force: true }));
-  before(() => models.Post.bulkCreate(posts))
+  // 초기화
+  insertDummyPosts(app);
   describe('성공시', () => {
     it('게시글 객체를 담은 배열로 응답 ', done => {
       request(app)
@@ -36,22 +25,10 @@ describe('GET /posts', () => {
 
 // read post
 describe('GET /posts/:id', () => {
-  const posts = [
-    {
-      "title": "첫 번째 게시글입니다.",
-      "contents": "hello this post is first post"
-    },
-    {
-      "title": "두 번째 게시글입니다.",
-      "contents": "hello this post is second post"
-    },
-    {
-      "title": "세 번째 게시글입니다.",
-      "contents": "hello this post is third post"
-    },
-  ]
   before(() => models.sequelize.sync({ force: true }));
-  before(() => models.Post.bulkCreate(posts))
+  // before(() => models.Post.bulkCreate(posts))
+  // 데이터를 생성하는 코드 작성
+  insertDummyPosts(app);
   describe('Success', () => {
     it('id가 1인 게시글 객체 반환', done => {
       request(app)
@@ -81,26 +58,21 @@ describe('GET /posts/:id', () => {
 
 // create post
 describe('POST /posts', () => {
-  const posts = [
-    {
-      "title": "첫 번째 게시글입니다.",
-      "contents": "hello this post is first post"
-    },
-    {
-      "title": "두 번째 게시글입니다.",
-      "contents": "hello this post is second post"
-    },
-    {
-      "title": "세 번째 게시글입니다.",
-      "contents": "hello this post is third post"
-    },
-  ]
+  // DB 초기화
   before(() => models.sequelize.sync({ force: true }));
-  before(() => models.Post.bulkCreate(posts))
+  // before(() => models.Post.bulkCreate(posts))
   // post 를 작성하기 위한 로그인
-  const auth = {};
-  before(signupUser());
-  before(loginUser(auth));
+  const auth = {};  
+  before(signupUser({
+    "email": "broccoli@gmail.com",
+    "password": "1234",
+    "nickname": "broccoli"
+  }));
+  before(loginUser(auth, {
+    "email": "broccoli@gmail.com",
+    "password": "1234",
+  }));
+  
 
   describe('Success', () => {
     const newPost = {
@@ -156,35 +128,28 @@ describe('POST /posts', () => {
 
 // DELETE /posts/:id
 describe('DELETE /posts/:id', () => {
-  const posts = [
-    {
-      "title": "첫 번째 게시글입니다.",
-      "contents": "hello this post is first post"
-    },
-    {
-      "title": "두 번째 게시글입니다.",
-      "contents": "hello this post is second post"
-    },
-    {
-      "title": "세 번째 게시글입니다.",
-      "contents": "hello this post is third post"
-    },
-  ]
   before(() => models.sequelize.sync({ force: true }));
-  before(() => models.Post.bulkCreate(posts))
+  // before(() => models.Post.bulkCreate(posts))
+  insertDummyPosts(app);
 
-  // delete를 작성하기 위한 로그인
+  // 게시글을 삭제하기 위해 아이디 생성 후 로그인
   const auth = {};
-  before(signupUser());
-  before(loginUser(auth));
-
+  before(signupUser({
+    "email": "chicken@gmail.com",
+    "password": "1234",
+    "nickname": "chicken"
+  }));
+  before(loginUser(auth, {
+    "email": "chicken@gmail.com",
+    "password": "1234",
+  }));
   describe('Success', () => {
     const newPost = {
       "title": "네 번째 게시글입니다.",
       "contents": "hello this post is fourth post"
     }
     let body;
-    // 삭제를 위해 4번째 게시물 생성
+    // 삭제를 위한 4번째 게시물 생성
     before(done => {
       request(app)
         .post('/posts')
@@ -229,28 +194,34 @@ describe('DELETE /posts/:id', () => {
   });
 });
 
-function signupUser() {
+
+// Signup Info
+// {
+//   "email": "haemil@gmail.com",
+//   "password": "1234",
+//   "nickname": "ham"
+// }
+function signupUser(signupInfo) {
   return done => {
     request(app)
       .post('/auth/signup')
-      .send({
-        "email": "haemil3@gmail.com",
-        "password": "1234",
-        "nickname": "ham3"
-      })
+      .send(signupInfo)
       .expect(201)
       .end(done)
   }
 }
 
-function loginUser(auth) {
+
+// Login Info
+// {
+//   email: 'haemil@gmail.com',
+//   password: '1234'
+// }
+function loginUser(auth, loginInfo) {
   return function(done) {
     request(app)
       .post('/auth/signin')
-      .send({
-        email: 'haemil3@gmail.com',
-        password: '1234'
-      })
+      .send(loginInfo)
       .expect(200)
       .end(onResponse);
 
@@ -261,3 +232,152 @@ function loginUser(auth) {
     }
   };
 }
+
+
+/**
+ * 게시글 목록 정보를 표현하기 위해 초기 데이터를 DB에 저장하는 코드
+ * 
+ */
+function insertDummyPosts(app) {
+  // 목록 정보로 표현할 글을 생성하기 위한 회원가입과 로그인
+  const auth = {};
+  // Signup Info
+  const signupInfo = {
+    "email": "haemil@gmail.com",
+    "password": "1234",
+    "nickname": "ham"
+  }
+  // Login Info
+  const loginInfo = {
+    email: 'haemil@gmail.com',
+    password: '1234'
+  }
+  before(signupUser(signupInfo));
+  before(loginUser(auth, loginInfo));
+  let body;
+  // 작성할 게시글 데이터
+  const postList = [
+    {
+      "title": "첫 번째 게시글입니다.",
+      "contents": "hello this post is first post",
+    },
+    {
+      "title": "두 번째 게시글입니다.",
+      "contents": "hello this post is second post",
+    },
+    {
+      "title": "세 번째 게시글입니다.",
+      "contents": "hello this post is third post",
+    },
+  ]
+  postList.forEach(post => {
+    before(done => {
+      request(app)
+        .post('/posts')
+        .auth(auth.token, { type: 'bearer' })
+        .send(post)
+        .expect(201)
+        .end((err, res) => {
+          body = res.body;
+          done();
+        })
+    })
+  })
+  
+  // 작성할 게시글 데이터
+  // const firstPost = {
+  //   "title": "첫 번째 게시글입니다.",
+  //   "contents": "hello this post is first post",
+  // }
+  // const secondPost = {
+  //   "title": "두 번째 게시글입니다.",
+  //   "contents": "hello this post is second post",
+  // }
+  // const thirdPost ={
+  //   "title": "세 번째 게시글입니다.",
+  //   "contents": "hello this post is third post",
+  // }
+  // before(done => {
+  //   request(app)
+  //     .post('/posts')
+  //     .auth(auth.token, { type: 'bearer' })
+  //     .send(firstPost)
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       body = res.body;
+  //       done();
+  //     })
+  // })
+  // before(done => {
+  //   request(app)
+  //     .post('/posts')
+  //     .auth(auth.token, { type: 'bearer' })
+  //     .send(secondPost)
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       body = res.body;
+  //       done();
+  //     })
+  // });
+  // before(done => {
+  //   request(app)
+  //     .post('/posts')
+  //     .auth(auth.token, { type: 'bearer' })
+  //     .send(thirdPost)
+  //     .expect(201)
+  //     .end((err, res) => {
+  //       body = res.body;
+  //       done();
+  //     })
+  // });
+}
+
+// 게시글 목록을 나타내는 데이터
+// const posts = [
+//   {
+//     "title": "첫 번째 게시글입니다.",
+//     "contents": "hello this post is first post",
+//   },
+//   {
+//     "title": "두 번째 게시글입니다.",
+//     "contents": "hello this post is second post",
+//   },
+//   {
+//     "title": "세 번째 게시글입니다.",
+//     "contents": "hello this post is third post",
+//   },
+// ]
+
+
+// function signupUser() {
+//   return done => {
+//     request(app)
+//       .post('/auth/signup')
+//       .send({
+//         "email": "haemil@gmail.com",
+//         "password": "1234",
+//         "nickname": "ham"
+//       })
+//       .expect(201)
+//       .end(done)
+//   }
+// }
+
+// function loginUser(auth) {
+//   return function(done) {
+//     request(app)
+//       .post('/auth/signin')
+//       .send({
+//         email: 'haemil@gmail.com',
+//         password: '1234'
+//       })
+//       .expect(200)
+//       .end(onResponse);
+
+//     function onResponse(err, res) {
+//       auth.token = res.body.accessToken;
+//       // console.log('token: ',auth.token);
+//       return done();
+//     }
+//   };
+// }

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			prfcast: {
 				type: DataTypes.STRING(200),
-				allowNull: false,
+				allowNull: true,
 			},
 			prfcrew: {
 				type: DataTypes.STRING(50),

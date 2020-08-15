@@ -68,7 +68,7 @@ describe('GET /auth/me', () => {
     //     .get('/auth/me')
     //     .expect(401)
     //     .end(done)
-    // });
+    // });    
   });
 
   describe('Success', () => {
@@ -95,7 +95,7 @@ function signupUser() {
     request
       .post('/auth/signup')
       .send({
-        "email": "haemil3@gmail.com",
+        "email": "haemil@gmail.com",
         "password": "1234",
         "nickname": "ham3"
       })
@@ -109,7 +109,7 @@ function loginUser(auth) {
     request
       .post('/auth/signin')
       .send({
-        email: 'haemil3@gmail.com',
+        email: 'haemil@gmail.com',
         password: '1234'
       })
       .expect(200)

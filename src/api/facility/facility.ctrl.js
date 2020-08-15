@@ -6,7 +6,7 @@ require('dotenv').config();
 const { Facility, Facility_detail } = require('../../models');
 const { storeFacilityData, tidyData } = require('./scripts');
 // 처음 faciliy API에 데이터가 없다면 아래 함수 실행을 통해 더미 데이터를 등록한다.
-const { getFacilitiesDummyData } = require('./scripts');
+// const { getFacilitiesDummyData } = require('./scripts');
 
 // KOPIS에 쿼리스크립트를 요청하기 위해 필요한 URL
 const SERVICE_KEY = process.env.SERVICE_KEY;
@@ -14,14 +14,16 @@ const HOST = 'http://kopis.or.kr/openApi/restful/';
 const category = 'prfplc/';
 
 const index = async (req, res) => {
-	try {
-		req.query.limit = req.query.limit || 10;
-		const limit = parseInt(req.query.limit, 10);
-		if (Number.isNaN(limit))
-			return res.status(400).json('limit 값이 숫자형이 아님');
+	// 초기 dummy data DB에 반영. 한 번만 반영하면 됨
+	// await getFacilitiesDummyData();
 
-		await getFacilitiesDummyData(); // 초기 dummy data DB에 반영
-		const facilities = await Facility.findAll({ limit });
+	// req.query.limit = req.query.limit || 10;
+	// const limit = parseInt(req.query.limit, 10);
+	// if (Number.isNaN(limit))
+	// 	return res.status(400).json('limit 값이 숫자형이 아님');
+	try {
+		// const facilities = await Facility.findAll({ limit });
+		const facilities = await Facility.findAll();
 		if (facilities.length === 0)
 			return res.status(404).json({ msg: 'not found facilities' });
 
